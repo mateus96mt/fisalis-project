@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sketch/controllers/images_data_set.controller.dart';
+import 'package:sketch/controllers/github.controller.dart';
 import 'package:sketch/model/clothe.model.dart';
 
 class ClotheDetailScreen extends StatefulWidget {
@@ -56,7 +56,7 @@ class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
                 Expanded(
                   child: Image.network(
                       '${widget.clothe.imagePath}/${this.selectedFile}',
-                      headers: ImagesDataSetController.header),
+                      headers: GithubDataController.header),
                 ),
                 for (int index = 0; index < this.numberOfParts; index++)
                   clothePartChanger(index),
