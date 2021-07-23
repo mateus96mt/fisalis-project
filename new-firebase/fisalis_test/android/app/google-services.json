@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "830299248604",
+    "project_id": "fisalis-test-d0330",
+    "storage_bucket": "fisalis-test-d0330.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:830299248604:android:51cbc5d8a53ce1f0716119",
+        "android_client_info": {
+          "package_name": "com.mateus96mt.fisalis_test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "830299248604-6jfn6ov5m23sgq3is84qmom1ikvhtmqf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg_rMC1yhOg1oEMy8mmNRHhh2vJvdIiS8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "830299248604-6jfn6ov5m23sgq3is84qmom1ikvhtmqf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
