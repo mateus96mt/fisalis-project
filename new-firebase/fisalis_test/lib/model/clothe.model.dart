@@ -1,15 +1,25 @@
 class Clothe {
-  String id = '';
   String title = '';
-  List<dynamic> parts = [];
+  Parts parts = Parts();
   String imagePath = '';
 
-  Clothe(this.id, this.title, this.parts, this.imagePath);
+  Clothe(this.title, this.parts, this.imagePath);
 
   Clothe.fromJson(Map<String, dynamic> json) {
-    this.id = json['id'] ?? '0';
+    // print("---------------PARSING---------------");
+    // print(json['title']);
+    // print(json['parts']['types']);
+    // print(json['parts']['colors']);
+    // print(json['imagePath']);
+    // print("---------------PARSING---------------");
     this.title = json['title'] ?? '';
-    this.parts = json['parts'] ?? [];
+    this.parts.types = json['parts']['types'] ?? '';
+    this.parts.colors = json['parts']['colors'] ?? '';
     this.imagePath = json['imagePath'] ?? '';
   }
+}
+
+class Parts {
+  List<dynamic> types = [];
+  List<dynamic> colors = [];
 }

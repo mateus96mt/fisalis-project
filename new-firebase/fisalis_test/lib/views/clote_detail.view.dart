@@ -13,16 +13,13 @@ class ClotheDetailScreen extends StatefulWidget {
 }
 
 class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
-  int numberOfParts = 0;
   String selectedFile = '';
-  List<int> selectParts = [];
+  int selectedType = 0;
+  int selectedColor = 0;
 
   @override
   void initState() {
-    numberOfParts = widget.clothe.parts.length;
-    for (int i = 0; i < this.numberOfParts; i++) {
-      this.selectParts.add(0);
-    }
+    // numberOfParts = widget.clothe.parts.length;
     this.setImageFileName();
     super.initState();
   }
@@ -58,8 +55,16 @@ class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
                       '${widget.clothe.imagePath}/${this.selectedFile}',
                       headers: GithubDataController.header),
                 ),
-                for (int index = 0; index < this.numberOfParts; index++)
-                  clothePartChanger(index),
+                clothePartChanger(
+                  widget.clothe.parts.types[this.selectedType],
+                  increaseType,
+                  decreaseType,
+                ),
+                clothePartChanger(
+                  widget.clothe.parts.colors[this.selectedColor],
+                  increaseColor,
+                  decreaseColor,
+                ),
               ],
             ),
           ),
@@ -68,43 +73,49 @@ class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
     );
   }
 
-  void setImageFileName() {
+  setImageFileName() {
     this.selectedFile = '';
-    for (int i = 0; i < this.numberOfParts; i++) {
-      this.selectedFile += '${widget.clothe.parts[i][selectParts[i]]}';
-    }
+    this.selectedFile += widget.clothe.parts.types[this.selectedType];
+    this.selectedFile += widget.clothe.parts.colors[this.selectedColor];
     this.selectedFile += '.png';
   }
 
-  void increasePart(int index) {
-    setState(() {
-      if (this.selectParts[index] == widget.clothe.parts[index].length - 1) {
-        this.selectParts[index] = 0;
-      } else {
-        this.selectParts[index]++;
-      }
-      this.setImageFileName();
-    });
+  void increaseType() {
+    if (this.selectedType < widget.clothe.parts.types.length - 1) {
+      this.selectedType++;
+    }
   }
 
-  void decreasePart(int index) {
-    setState(() {
-      if (this.selectParts[index] == 0) {
-        this.selectParts[index] = widget.clothe.parts[index].length - 1;
-      } else {
-        this.selectParts[index]--;
-      }
-      this.setImageFileName();
-    });
+  void decreaseType() {
+    if (this.selectedType > 0) {
+      this.selectedType--;
+    }
   }
 
-  Widget clothePartChanger(int index) {
+  void increaseColor() {
+    if (this.selectedColor < widget.clothe.parts.colors.length - 1) {
+      this.selectedColor++;
+    }
+  }
+
+  void decreaseColor() {
+    if (this.selectedColor > 0) {
+      this.selectedColor--;
+    }
+  }
+
+  Widget clothePartChanger(
+      String selectedPart, VoidCallback increase, VoidCallback decrease) {
     return Row(
       children: [
         Expanded(
           child: TextButton(
             onPressed: () {
-              this.decreasePart(index);
+              decrease();
+              this.setImageFileName();
+              if (mounted) {
+                this.setState(() {});
+              }
             },
             child: Icon(
               Icons.keyboard_arrow_left,
@@ -113,12 +124,16 @@ class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
           ),
         ),
         Text(
-          widget.clothe.parts[index][selectParts[index]],
+          selectedPart,
         ),
         Expanded(
           child: TextButton(
             onPressed: () {
-              this.increasePart(index);
+              increase();
+              this.setImageFileName();
+              if (mounted) {
+                this.setState(() {});
+              }
             },
             child: Icon(
               Icons.keyboard_arrow_right,

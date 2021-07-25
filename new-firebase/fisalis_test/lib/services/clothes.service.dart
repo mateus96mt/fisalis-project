@@ -1,17 +1,19 @@
-import 'package:sketch/controllers/elasticsearch.controller.dart';
+import 'dart:convert';
+
+import 'package:sketch/controllers/firebase_firestore.controller.dart';
 import 'package:sketch/model/clothe.model.dart';
 
 class ClothesServices {
   static Future<List<Clothe>> getClothes() async {
-    return ElasticSearchController.getClothes().then(
+    return FirebaseFireStoreController.getClothes().then(
       (response) {
-        List<dynamic> clothesJson = response.data['hits']['hits'];
         List<Clothe> clothes = [];
-
-        for (Map<String, dynamic> clotheJson in clothesJson) {
-          clothes.add(Clothe.fromJson(clotheJson['_source']));
+        for (var doc in response.docs) {
+          // print(doc.data());
+          clothes.add(
+            Clothe.fromJson(doc.data()),
+          );
         }
-
         return clothes;
       },
     );

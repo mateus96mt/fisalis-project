@@ -1,6 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:sketch/controllers/elasticsearch.controller.dart';
 import 'package:sketch/controllers/github.controller.dart';
 import 'package:sketch/model/clothe.model.dart';
 import 'package:sketch/services/clothes.service.dart';
@@ -13,16 +11,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isLoading = true;
-  bool hasErrorLoadingBaseUrl = false;
+  bool isLoading = false;
   bool hasErrorLoadingClothes = false;
   List<Clothe> clothes = [];
-  final _fireStore = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-    loadLocalHostUrl();
   }
 
   @override
@@ -35,74 +30,70 @@ class _HomeScreenState extends State<HomeScreen> {
                   size: 40,
                   color: Colors.black,
                 )
-              : this.hasErrorLoadingBaseUrl
-                  ? Text(
-                      'Erro ao carregar url do servidor local\n\n Tente novamente',
-                    )
-                  : Padding(
-                      padding: EdgeInsets.all(20),
-                      child: Column(
+              : Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      Row(
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: FlatButton(
-                                  color: Colors.green,
-                                  onPressed: isLoading ? () {} : getClothes,
-                                  child: Text(
-                                    'Carregar dados',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
+                          Expanded(
+                            child: FlatButton(
+                              color: Colors.green,
+                              onPressed: isLoading ? () {} : getClothes,
+                              child: Text(
+                                'Carregar dados',
+                                style: TextStyle(color: Colors.white),
                               ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Expanded(
-                                child: FlatButton(
-                                  color: Colors.red,
-                                  onPressed: isLoading ? () {} : cleanClothes,
-                                  child: Text(
-                                    'Limpar dados',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                          this.hasErrorLoadingClothes
-                              ? Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                        top: 400,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        'Erro ao carregar dados\n\nA url da máquina local pode ter mudado ou a máquina está desligada\n\nTente novamente',
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: GestureDetector(
-                                        child: CircleAvatar(
-                                          radius: 30,
-                                          backgroundColor: Colors.redAccent,
-                                          child: Icon(Icons.restart_alt),
-                                        ),
-                                        onTap: getClothes,
-                                      ),
-                                    )
-                                  ],
-                                )
-                              : Container(),
-                          for (int i = 0; i < this.clothes.length; i++)
-                            Expanded(child: clotheCard(this.clothes[i]))
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: FlatButton(
+                              color: Colors.red,
+                              onPressed: isLoading ? () {} : cleanClothes,
+                              child: Text(
+                                'Limpar dados',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
+                      this.hasErrorLoadingClothes
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 400,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    'Erro ao carregar dados\n\n\n\nTente novamente',
+                                  ),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    child: CircleAvatar(
+                                      radius: 30,
+                                      backgroundColor: Colors.redAccent,
+                                      child: Icon(Icons.restart_alt),
+                                    ),
+                                    onTap: getClothes,
+                                  ),
+                                )
+                              ],
+                            )
+                          : Container(),
+                      for (int i = 0; i < this.clothes.length; i++)
+                        Expanded(child: clotheCard(this.clothes[i]))
+                    ],
+                  ),
+                ),
         ),
       ),
     );
@@ -155,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: CircleAvatar(
                 maxRadius: 200,
                 backgroundImage: NetworkImage(
-                  '${clothe.imagePath}/${clothe.parts[0][0]}${clothe.parts[1][0]}.png',
+                  '${clothe.imagePath}/${clothe.parts.types[0]}${clothe.parts.colors[0]}.png',
                   headers: GithubDataController.header,
                 ),
               ),
@@ -169,29 +160,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void loadLocalHostUrl() {
-    ElasticSearchController.setLocalHostBaseUrl().then((response) {
-      if (mounted) {
-        setState(() {
-          this.isLoading = false;
-          this.hasErrorLoadingBaseUrl = false;
-        });
-      }
-    }).catchError((onError) {
-      print(onError);
-      if (mounted) {
-        this.setState(() {
-          this.isLoading = false;
-          this.hasErrorLoadingBaseUrl = true;
-        });
-      }
-    });
-  }
-
   void testFirebase() {
-    for (var roupa in roupas) {
-      _fireStore.collection("roupas").doc(roupa['title']).set(roupa);
-    }
+    // for (var roupa in roupas) {
+    //   _fireStore.collection("roupas").doc(roupa['title']).set(roupa);
+    // }
   }
 }
 
