@@ -1,9 +1,14 @@
+import 'dart:typed_data';
+
+import 'package:sketch/utils/globals.dart';
+
 class Clothe {
   String title = '';
   Parts parts = Parts();
-  String imagePath = '';
+  Uint8List imageBytes = Uint8List(IMAGE_SIZE);
+  String imageURL = '';
 
-  Clothe(this.title, this.parts, this.imagePath);
+  Clothe(this.title, this.parts, this.imageBytes);
 
   Clothe.fromJson(Map<String, dynamic> json) {
     // print("---------------PARSING---------------");
@@ -15,7 +20,6 @@ class Clothe {
     this.title = json['title'] ?? '';
     this.parts.types = json['parts']['types'] ?? '';
     this.parts.colors = json['parts']['colors'] ?? '';
-    this.imagePath = json['imagePath'] ?? '';
   }
 }
 

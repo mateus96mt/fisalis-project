@@ -1,9 +1,11 @@
+import 'package:firebase_storage_web/firebase_storage_web.dart';
 import 'package:flutter/material.dart';
-import 'package:sketch/controllers/github.controller.dart';
+import 'package:sketch/controllers/firebase_firestore.controller.dart';
 import 'package:sketch/model/clothe.model.dart';
 import 'package:sketch/services/clothes.service.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:sketch/views/clote_detail.view.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -18,6 +20,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    Firebase.initializeApp();
   }
 
   @override
@@ -129,6 +132,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget clotheCard(Clothe clothe) {
+//     //.instance.ref().child('125559151_3443918229022360_136611800436695964_n');
+//     var image = FirebaseFireStoreController.firebaseStorageWeb.ref('/data/${clothe.title}').child('${clothe.parts.types[0]}${clothe.parts.colors[0]}.png');
+// // no need of the file extension, the name will do fine.
+//     var url =  image.getDownloadURL().then((value) {
+//       print(value);
+//     });
+
+    // print('${clothe.parts.types[0]}${clothe.parts.colors[0]}.png');
+
+    // print(clothe.imagePath);
+
+    print(clothe.imageURL);
+
     return TextButton(
       onPressed: () {
         Navigator.push(
@@ -142,13 +158,16 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.blue[50],
         child: Row(
           children: [
+            // Expanded(
+            //   child: CircleAvatar(
+            //     maxRadius: 200,
+            //     backgroundImage: MemoryImage(clothe.imageBytes),
+            //   ),
+            // ),
             Expanded(
               child: CircleAvatar(
                 maxRadius: 200,
-                backgroundImage: NetworkImage(
-                  '${clothe.imagePath}/${clothe.parts.types[0]}${clothe.parts.colors[0]}.png',
-                  headers: GithubDataController.header,
-                ),
+                backgroundImage: NetworkImage(clothe.imageURL),
               ),
             ),
             Expanded(

@@ -50,11 +50,11 @@ class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
                   widget.clothe.title,
                   style: TextStyle(fontSize: 30),
                 ),
-                Expanded(
-                  child: Image.network(
-                      '${widget.clothe.imagePath}/${this.selectedFile}',
-                      headers: GithubDataController.header),
-                ),
+                // Expanded(
+                //   child: Image.network(
+                //       '${widget.clothe.imagePath}/${this.selectedFile}',
+                //       headers: GithubDataController.header),
+                // ),
                 clothePartChanger(
                   widget.clothe.parts.types[this.selectedType],
                   increaseType,
