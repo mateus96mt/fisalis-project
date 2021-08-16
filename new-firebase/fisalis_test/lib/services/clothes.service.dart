@@ -15,12 +15,12 @@ class ClothesServices {
           //     .then((imageBytes) {
           //   // clothe.imageBytes = imageBytes;
           // });
-          await FirebaseFireStoreController.getClotheImageURL(
-              '/data/${clothe.title}',
-              '${clothe.parts.types[0]}${clothe.parts.colors[0]}.png')
-              .then((url) {
-            clothe.imageURL = url;
-          });
+          // await FirebaseFireStoreController.getClotheImageURL(
+          //     '/data/${clothe.title}',
+          //     '${clothe.parts.types[0]}${clothe.parts.colors[0]}.png')
+          //     .then((url) {
+          //   clothe.imageURL = url;
+          // });
           clothes.add(
             clothe,
           );

@@ -164,12 +164,12 @@ class _HomeScreenState extends State<HomeScreen> {
             //     backgroundImage: MemoryImage(clothe.imageBytes),
             //   ),
             // ),
-            Expanded(
-              child: CircleAvatar(
-                maxRadius: 200,
-                backgroundImage: NetworkImage(clothe.imageURL),
-              ),
-            ),
+            // Expanded(
+            //   child: CircleAvatar(
+            //     maxRadius: 200,
+            //     backgroundImage: NetworkImage(clothe.imageURL),
+            //   ),
+            // ),
             Expanded(
               child: Text(clothe.title),
             ),
