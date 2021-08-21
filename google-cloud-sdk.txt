@@ -1,0 +1,4 @@
+gsutil cors set cors.json gs://fisalis-test-d0330.appspot.com 
+
+compilar localhost CORs:
+https://stackoverflow.com/questions/65630743/how-to-solve-flutter-web-api-cors-error-only-with-dart-code
