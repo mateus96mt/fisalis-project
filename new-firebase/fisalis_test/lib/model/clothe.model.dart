@@ -7,8 +7,9 @@ class Clothe {
   Parts parts = Parts();
   Uint8List imageBytes = Uint8List(IMAGE_SIZE);
   String imageURL = '';
+  String imagePath = '';
 
-  Clothe(this.title, this.parts, this.imageBytes);
+  Clothe(this.title, this.parts, this.imagePath);
 
   Clothe.fromJson(Map<String, dynamic> json) {
     // print("---------------PARSING---------------");

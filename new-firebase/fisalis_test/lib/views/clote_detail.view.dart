@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sketch/controllers/firebase_firestore.controller.dart';
 import 'package:sketch/controllers/github.controller.dart';
 import 'package:sketch/model/clothe.model.dart';
 
@@ -50,11 +51,11 @@ class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
                   widget.clothe.title,
                   style: TextStyle(fontSize: 30),
                 ),
-                // Expanded(
-                //   child: Image.network(
-                //       '${widget.clothe.imagePath}/${this.selectedFile}',
-                //       headers: GithubDataController.header),
-                // ),
+                Expanded(
+                  child: Image.network(
+                      this.selectedFile,
+                      headers: GithubDataController.header),
+                ),
                 clothePartChanger(
                   widget.clothe.parts.types[this.selectedType],
                   increaseType,
@@ -74,10 +75,12 @@ class _ClotheDetailScreenState extends State<ClotheDetailScreen> {
   }
 
   setImageFileName() {
-    this.selectedFile = '';
-    this.selectedFile += widget.clothe.parts.types[this.selectedType];
-    this.selectedFile += widget.clothe.parts.colors[this.selectedColor];
-    this.selectedFile += '.png';
+    // this.selectedFile = '';
+    // this.selectedFile += widget.clothe.parts.types[this.selectedType];
+    // this.selectedFile += widget.clothe.parts.colors[this.selectedColor];
+    // this.selectedFile += '.png';
+
+    this.selectedFile = FirebaseFireStoreController.getUrlToFirebaseStorageFIle('data/${widget.clothe.title}/${widget.clothe.parts.types[this.selectedType]}${widget.clothe.parts.colors[this.selectedColor]}.png');
   }
 
   void increaseType() {

@@ -11,7 +11,15 @@ class FirebaseFireStoreController {
   static final _fireStore = FirebaseFirestore.instance;
 
   static final firebaseStorageWeb =
-      FirebaseStorageWeb(bucket: 'gs://fisalis-test-d0330.appspot.com');
+      FirebaseStorageWeb(bucket: 'gs://$firebaseStorageBucket');
+
+  static String firebaseStorageBucket = 'fisalis-test-d0330.appspot.com';
+
+  static String firebaseGoogleAPIsUrl =
+      'https://firebasestorage.googleapis.com/v0/b';
+
+  static String firebaseStorageAccessToken =
+      '5f5b73e5-d0a9-4288-b501-7a65e29542ce';
 
   // static final _firebaseAuth = FirebaseAuthWeb(app: app)
 
@@ -28,6 +36,29 @@ class FirebaseFireStoreController {
     return image.getDownloadURL();
   }
 
+  static String getUrlToFirebaseStorageFIle(String filePath) {
+    String url = '$firebaseGoogleAPIsUrl/$firebaseStorageBucket/o';
+
+    // url = '$url/data%2Fshirt%2F1y.png';
+
+    List<String> subPaths = filePath.split('/');
+
+    if (subPaths.length > 0) {
+      url = '$url/${subPaths[0]}';
+    } else {
+      url = '$url/$filePath';
+    }
+
+    if (subPaths.length > 1) {
+      for (int i = 1;i<subPaths.length;i++) {
+        url = '$url%2F${subPaths[i]}';
+      }
+    }
+
+    url = '$url?alt=media&token=$firebaseStorageAccessToken';
+
+    return url;
+  }
   // static Future<Uint8List?> getClotheImageBytes(
   //     String reference, String fileName) async {
   //   // final FirebaseStorage firebaseStorage = FirebaseStorage(

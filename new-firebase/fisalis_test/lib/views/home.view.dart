@@ -132,18 +132,17 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget clotheCard(Clothe clothe) {
-//     //.instance.ref().child('125559151_3443918229022360_136611800436695964_n');
-//     var image = FirebaseFireStoreController.firebaseStorageWeb.ref('/data/${clothe.title}').child('${clothe.parts.types[0]}${clothe.parts.colors[0]}.png');
-// // no need of the file extension, the name will do fine.
-//     var url =  image.getDownloadURL().then((value) {
-//       print(value);
-//     });
+    // var image = FirebaseFireStoreController.firebaseStorageWeb.ref('/data/${clothe.title}').child('${clothe.parts.types[0]}${clothe.parts.colors[0]}.png');
+    // image.getDownloadURL().then((value) {
+    //   print(value);
+    // });
 
-    // print('${clothe.parts.types[0]}${clothe.parts.colors[0]}.png');
+    // print('clothe.imageURL: ${clothe.imageURL}');
 
-    // print(clothe.imagePath);
+    String fileURL = FirebaseFireStoreController.getUrlToFirebaseStorageFIle(
+        'data/${clothe.title}/${clothe.parts.types[0]}${clothe.parts.colors[0]}.png');
 
-    print(clothe.imageURL);
+    print('fileURL: $fileURL');
 
     return TextButton(
       onPressed: () {
@@ -164,12 +163,12 @@ class _HomeScreenState extends State<HomeScreen> {
             //     backgroundImage: MemoryImage(clothe.imageBytes),
             //   ),
             // ),
-            // Expanded(
-            //   child: CircleAvatar(
-            //     maxRadius: 200,
-            //     backgroundImage: NetworkImage(clothe.imageURL),
-            //   ),
-            // ),
+            Expanded(
+              child: CircleAvatar(
+                maxRadius: 200,
+                backgroundImage: NetworkImage(fileURL),
+              ),
+            ),
             Expanded(
               child: Text(clothe.title),
             ),
