@@ -1,9 +1,6 @@
-import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth_web/firebase_auth_web.dart';
 import 'package:firebase_storage_web/firebase_storage_web.dart';
-import 'package:sketch/utils/globals.dart';
 
 class FirebaseFireStoreController {
   static String collectionName = 'roupas';

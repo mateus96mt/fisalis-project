@@ -1,1 +1,0 @@
-const int IMAGE_SIZE = 100000000;
